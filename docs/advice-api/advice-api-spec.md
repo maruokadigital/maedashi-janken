@@ -133,6 +133,5 @@ answer_spec == null
 
 ```json
 {
-  "action": "rule_selection",
-  "ruleId": "zebra"
+  "answer": "GGG",
 }
