@@ -46,7 +46,6 @@
 
 public-release/
 docs/ 仕様ドキュメント
-examples/ サンプルデータ・サンプル構成
 public/ 画像・スクリーンショット
 
 
