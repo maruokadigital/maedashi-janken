@@ -127,7 +127,12 @@ answer_spec == null
 
 ## 10. 最小レスポンス例
 
+最小限の実装では、1つのフェーズに対して単純な意思決定を返すだけでも動作します。
+
+以下は、ルール選択フェーズにおける最小レスポンス例です。
+
+```json
 {
-  "answer": "GGG",
-  "message": "Hello,World!"
+  "action": "rule_selection",
+  "ruleId": "zebra"
 }
