@@ -12,13 +12,23 @@
 
 ---
 
+## Screenshot
+
+### Game screen
+![Game](public/images/screenshots/screenshot-01.png)
+
+### Battle / UI example
+![Battle](public/images/screenshots/screenshot-02.png)
+
+---
+
 ## Documentation
 
 ドキュメントは `docs/` にまとまっています。
 
 - Advice API  
   外部AIと連携するためのインターフェース仕様  
-  → `docs/advice-api/`
+  → [docs/advice-api/](docs/advice-api/)
 
 ---
 
@@ -28,7 +38,7 @@
 まずは以下のドキュメントから仕様を確認してください。
 
 - Advice API を使いたい場合  
-  → `docs/advice-api/advice-api-spec.md`
+  → [docs/advice-api/advice-api-spec.md](docs/advice-api/advice-api-spec.md)
 
 ---
 
