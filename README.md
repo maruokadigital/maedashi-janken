@@ -44,11 +44,11 @@
 
 ## Repository Structure
 
-
+```
 public-release/
 docs/ 仕様ドキュメント
 public/ 画像・スクリーンショット
-
+```
 
 ---
 
