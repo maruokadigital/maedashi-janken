@@ -210,8 +210,7 @@
     "turtle": 0,
     "crab": 0,
     "peacock": 0,
-    "dolphin": -1,
-    "lion": 0
+    "dolphin": -1
   },
   "player2": {
     "hornet": -1,
@@ -222,8 +221,7 @@
     "turtle": 1,
     "crab": -1,
     "peacock": 0,
-    "dolphin": 0,
-    "lion": 0
+    "dolphin": 0
   }
 }
 ```
@@ -244,7 +242,6 @@
 - `crab`
 - `peacock`
 - `dolphin`
-- `lion`
 
 各キーの意味:
 - `hornet`: Hornet ルールの配点
@@ -256,7 +253,6 @@
 - `crab`: Crab ルールの配点
 - `peacock`: Peacock ルールの配点
 - `dolphin`: Dolphin ルールの配点
-- `lion`: Lion ルールの配点
 
 配点制約:
 - すべてのキーの最小値は `-1`
