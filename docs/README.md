@@ -10,14 +10,14 @@
 
 外部AIやプログラムからゲームに参加するためのAPI仕様です。
 
+- 入口  
+  → [advice-api/](advice-api/)
+
 - 仕様本体  
-  `advice-api/advice-api-spec.md`
+  → [advice-api/advice-api-spec.md](advice-api/advice-api-spec.md)
 
 - キー定義（辞書）  
-  `advice-api/advice-api-key-reference.md`
-
-- 入口  
-  `advice-api/README.md`
+  → [advice-api/advice-api-key-reference.md](advice-api/advice-api-key-reference.md)
 
 ---
 
@@ -27,11 +27,10 @@
 
 ### Advice API を使う場合
 
-1. `advice-api/advice-api-spec.md`
-2. `advice-api/advice-api-key-reference.md`
+1. [advice-api/advice-api-spec.md](advice-api/advice-api-spec.md)
+2. [advice-api/advice-api-key-reference.md](advice-api/advice-api-key-reference.md)
 
 ---
-
 
 ## 注意
 
