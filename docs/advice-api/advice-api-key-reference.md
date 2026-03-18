@@ -164,14 +164,14 @@
 - 許可値:
   - `unknown`
   - `has_right`
-  - `random_selected`
+  - `waived`
   - `no_right`
   - `null`
 
 各値の意味:
 - `unknown`: 状態未確定または不明。
 - `has_right`: そのプレイヤーに選択権がある。
-- `random_selected`: ランダム選択により決定した。
+- `waived`: 選択権を放棄した。
 - `no_right`: そのプレイヤーに選択権がない。
 - `null`: 情報なし。
 
