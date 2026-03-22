@@ -68,17 +68,17 @@ URLは実装者が自由に定義する。
 
 ### format
 - symbol
-- booleanLike
-- lionScoreMap
+- boolean_like
+- lion_score_map
 
 ### フェーズ対応表
 
 | phase | format | answer型 | 例 |
 |------|--------|---------|----|
 | battle | symbol | string | "GGG" |
-| exchange_intent | booleanLike | string | "YES" |
+| exchange_intent | boolean_like | string | "yes" |
 | exchange_card_select | symbol | string | "CCC" |
-| lion_score_assign | lionScoreMap | object | {...} |
+| lion_score_assign | lion_score_map | object | {...} |
 | rule_selection | string | string | "lion" |
 | final | null | なし | - |
 
@@ -98,10 +98,11 @@ URLは実装者が自由に定義する。
 ## 7. rule_selection_status
 
 許可値:
-- unknown
-- has_right
-- random_selected
-- no_right
+  - unknown
+  - has_right
+  - waived
+  - no_right
+  - null
 
 ---
 
