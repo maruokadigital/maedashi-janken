@@ -42,10 +42,60 @@ URLは実装者が自由に定義する。
 }
 
 ### response
+
+response は最小限の `answer` のみでもよいが、実装や教材用途に応じて `message`、`answer_condition`、`context`、`duel`、`comment` を追加してよい。
+
+- 最小:
+  - `answer`
+- 教材用:
+  - `answer`
+  - `message`
+- 推奨:
+  - `answer`
+  - `answer_condition`
+  - `context`
+  - `message`
+- フル:
+  - `answer`
+  - `answer_condition`
+  - `duel`
+  - `context`
+  - `message`
+  - `comment`
+最小例:
+
+```json
+{
+  "answer": "GGG"
+}
+```
+教材用例:
+```json
 {
   "answer": "GGG",
-  "message": "string"
+  "message": "Hello,World!"
 }
+```
+推奨例:
+```json
+{
+  "answer": "GGG",
+  "answer_condition": {},
+  "context": {},
+  "message": "Hello,World!"
+}
+```
+フル例:
+```json
+{
+  "answer": "GGG",
+  "answer_condition": {},
+  "duel": {},
+  "context": {},
+  "message": "Hello,World!",
+  "comment": "debug info"
+}
+```
 
 ---
 
@@ -70,6 +120,7 @@ URLは実装者が自由に定義する。
 - symbol
 - boolean_like
 - lion_score_map
+- rule_name
 
 ### フェーズ対応表
 
@@ -79,7 +130,7 @@ URLは実装者が自由に定義する。
 | exchange_intent | boolean_like | string | "yes" |
 | exchange_card_select | symbol | string | "CCC" |
 | lion_score_assign | lion_score_map | object | {...} |
-| rule_selection | string | string | "lion" |
+| rule_selection | rule_name | string | "lion" |
 | final | null | なし | - |
 
 ---
@@ -130,9 +181,9 @@ answer_spec == null
 
 最小限の実装では、1つのフェーズに対して単純な意思決定を返すだけでも動作します。
 
-以下は、ルール選択フェーズにおける最小レスポンス例です。
+以下は、battle フェーズの最小レスポンス例です。
 
 ```json
 {
-  "answer": "GGG",
+  "answer": "GGG"
 }
