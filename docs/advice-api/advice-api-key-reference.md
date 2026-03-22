@@ -56,6 +56,15 @@
 - 役割: response がどの問い合わせ条件に対応するかを明示する。
 - 補足: request から受け取った `answer_condition` をそのまま返す構成を想定する。
 
+### `duel`
+- 型: `object`
+- 必須性: 任意
+- 役割: response 側で対戦状態全体を併記したい場合に使う。
+- 補足:
+  - フル response では `duel` を含めてよい。
+  - request の `duel` をそのまま返してもよい。
+  - または、応答時点の補足用スナップショットとして返してもよい。
+
 ### `message`
 - 型: `string | null`
 - 必須性: 任意
@@ -404,11 +413,13 @@
   - `symbol`
   - `boolean_like`
   - `lion_score_map`
+  - `rule_name`
 
 各値の意味:
 - `symbol`: 文字列記号を返す形式。
 - `boolean_like`: `yes` / `no` のようなブール相当文字列を返す形式。
 - `lion_score_map`: ルール名をキーとした配点マップを返す形式。
+- `rule_name`: ルール名の識別子文字列を返す形式。
 
 ### `answer_condition.answer_spec.set`
 - 型: `array | null`
@@ -417,6 +428,7 @@
   - `symbol` の場合は候補カード一覧
   - `boolean_like` の場合は `["yes", "no"]`
   - `lion_score_map` の場合は通常 `null`
+  - `rule_name` の場合は候補ルール名一覧
 - 注意: 数学的集合ではなく、重複を保持する候補列である。
 
 ### `answer_condition.answer_spec.template`
@@ -426,6 +438,7 @@
   - `symbol` → `"GGG"`
   - `boolean_like` → `"yes"`
   - `lion_score_map` → 配点オブジェクト
+  - `rule_name` → `"lion"`
 
 ---
 
@@ -452,7 +465,7 @@
 | `exchange_intent` | `boolean_like` | 交換するかどうか | `string` | `"yes"` |
 | `exchange_card_select` | `symbol` | 交換に出すカード | `string` | `"CCC"` |
 | `lion_score_assign` | `lion_score_map` | ライオン配点表 | `object` | `{ "hornet": 0, ... }` |
-| `rule_selection` | 文字列系 | 選択ルール名 | `string` | `"lion"` |
+| `rule_selection` | `rule_name` | 選択ルール名 | `string` | `"lion"` |
 | `final` | `null` | 通常は未使用 | 任意 | `null` |
 
 ---
@@ -480,13 +493,12 @@
 Advice API を最小実装する場合、最低限重要なのは次のキーである。
 
 ### request 側
-- `answer_condition.advice_at.phase`
-- `answer_condition.answer_spec.format`
-- `answer_condition.answer_spec.template`
+- `context`
+- `duel`
+- `answer_condition`
 
 ### response 側
 - `answer`
-- `message`
 
 ---
 
@@ -494,7 +506,6 @@ Advice API を最小実装する場合、最低限重要なのは次のキーで
 
 ```json
 {
-  "answer": "GGG",
-  "message": "Hello,World!"
+  "answer": "GGG"
 }
 ```
