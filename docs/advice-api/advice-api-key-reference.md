@@ -402,21 +402,21 @@
 - 役割: `answer` の期待形式を示す。
 - 許可値:
   - `symbol`
-  - `booleanLike`
-  - `lionScoreMap`
+  - `boolean_like`
+  - `lion_score_map`
 
 各値の意味:
 - `symbol`: 文字列記号を返す形式。
-- `booleanLike`: `YES` / `NO` のようなブール相当文字列を返す形式。
-- `lionScoreMap`: ルール名をキーとした配点マップを返す形式。
+- `boolean_like`: `yes` / `no` のようなブール相当文字列を返す形式。
+- `lion_score_map`: ルール名をキーとした配点マップを返す形式。
 
 ### `answer_condition.answer_spec.set`
 - 型: `array | null`
 - 役割: 回答候補列。
 - 補足:
   - `symbol` の場合は候補カード一覧
-  - `booleanLike` の場合は `["YES", "NO"]`
-  - `lionScoreMap` の場合は通常 `null`
+  - `boolean_like` の場合は `["yes", "no"]`
+  - `lion_score_map` の場合は通常 `null`
 - 注意: 数学的集合ではなく、重複を保持する候補列である。
 
 ### `answer_condition.answer_spec.template`
@@ -424,8 +424,8 @@
 - 役割: その request に対して最低限返せるテンプレート値。
 - 例:
   - `symbol` → `"GGG"`
-  - `booleanLike` → `"YES"`
-  - `lionScoreMap` → 配点オブジェクト
+  - `boolean_like` → `"yes"`
+  - `lion_score_map` → 配点オブジェクト
 
 ---
 
@@ -449,9 +449,9 @@
 | phase | format | `answer` の意味 | 型 | 例 |
 |---|---|---|---|---|
 | `battle` | `symbol` | 出すカード | `string` | `"GGG"` |
-| `exchange_intent` | `booleanLike` | 交換するかどうか | `string` | `"YES"` |
+| `exchange_intent` | `boolean_like` | 交換するかどうか | `string` | `"yes"` |
 | `exchange_card_select` | `symbol` | 交換に出すカード | `string` | `"CCC"` |
-| `lion_score_assign` | `lionScoreMap` | ライオン配点表 | `object` | `{ "hornet": 0, ... }` |
+| `lion_score_assign` | `lion_score_map` | ライオン配点表 | `object` | `{ "hornet": 0, ... }` |
 | `rule_selection` | 文字列系 | 選択ルール名 | `string` | `"lion"` |
 | `final` | `null` | 通常は未使用 | 任意 | `null` |
 
