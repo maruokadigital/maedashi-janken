@@ -313,6 +313,7 @@
   "player2_battle_card": "",
   "player1_applied_rules": [],
   "player2_applied_rules": [],
+  "round_winner": null,
   "lion_scores": {
     "player1_view": { "player1": 0, "player2": 0 },
     "player2_view": { "player1": 0, "player2": 0 }
@@ -349,6 +350,15 @@
 ### `duel.rounds[].player2_applied_rules`
 - 型: `string[]`
 - 役割: そのラウンドで適用されたルール名の一覧。
+
+### `duel.rounds[].round_winner`
+- 型: `"player1" | "player2" | "draw" | null`
+- 役割: そのラウンドの勝者を示す。
+- 値の意味:
+  - `player1`: player1 がそのラウンドで勝利した。
+  - `player2`: player2 がそのラウンドで勝利した。
+  - `draw`: そのラウンドは引き分けだった。
+  - `null`: 未確定、未実施、または判定前のラウンド。
 
 ### `duel.rounds[].lion_scores`
 - 型: `object`
@@ -461,11 +471,11 @@
 
 | phase | format | `answer` の意味 | 型 | 例 |
 |---|---|---|---|---|
-| `battle` | `symbol` | 出すカード | `string` | `"GGG"` |
+| `rule_selection` | `rule_name` | 選択ルール名 | `string` | `"lion"` |
+| `lion_score_assign` | `lion_score_map` | ライオン配点表 | `object` | `{ "hornet": 0, ... }` |
 | `exchange_intent` | `boolean_like` | 交換するかどうか | `string` | `"yes"` |
 | `exchange_card_select` | `symbol` | 交換に出すカード | `string` | `"CCC"` |
-| `lion_score_assign` | `lion_score_map` | ライオン配点表 | `object` | `{ "hornet": 0, ... }` |
-| `rule_selection` | `rule_name` | 選択ルール名 | `string` | `"lion"` |
+| `battle` | `symbol` | 出すカード | `string` | `"GGG"` |
 | `final` | `null` | 通常は未使用 | 任意 | `null` |
 
 ---
