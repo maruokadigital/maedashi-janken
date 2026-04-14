@@ -11,7 +11,7 @@
 - 同名キーの役割整理
 - API 実装時の読み取り・返却項目の確認
 
-本書は、構造中心の仕様書とは別に、**各キーの意味を辞書的に参照するための文書**として用いる。
+本書は、構造中心の仕様書とは別に、各キーの意味を辞書的に参照するための文書として用いる。
 
 ---
 
@@ -23,6 +23,18 @@
 - 型: `string`
 - 役割: request 全体の公開フォーマットのバージョンを示す。
 - 例: `"1.0"`
+
+### `game_instance_id`
+- 型: `string | null`
+- 役割: その request が属する試合インスタンスの識別子。
+- 例: `"5481c6a7-e1d0-4eab-a1dc-4dd82f82e0bd"`
+- 補足: 同一試合に属する複数 request を関連付けるために使う。
+
+### `game_started_at`
+- 型: `number | null`
+- 役割: 試合開始時刻。
+- 例: `1776126498090`
+- 補足: Unix epoch milliseconds を想定する。
 
 ### `context`
 - 型: `object`
@@ -60,10 +72,6 @@
 - 型: `object`
 - 必須性: 任意
 - 役割: response 側で対戦状態全体を併記したい場合に使う。
-- 補足:
-  - フル response では `duel` を含めてよい。
-  - request の `duel` をそのまま返してもよい。
-  - または、応答時点の補足用スナップショットとして返してもよい。
 
 ### `message`
 - 型: `string | null`
@@ -99,11 +107,11 @@
 ```json
 {
   "meaning": "gu",
-  "symbol": "GGG"
+  "symbol": "G"
 }
 ```
 
-#### `context.janken_mapping[].meaning`
+### `context.janken_mapping[].meaning`
 - 型: `string`
 - 役割: じゃんけんの意味名。
 - 主な値:
@@ -111,13 +119,13 @@
   - `choki`
   - `pa`
 
-#### `context.janken_mapping[].symbol`
+### `context.janken_mapping[].symbol`
 - 型: `string`
 - 役割: 公開 API 上で実際に使う記号。
 - 例:
-  - `GGG`
-  - `CCC`
-  - `PPP`
+  - `G`
+  - `C`
+  - `P`
 
 ---
 
@@ -201,13 +209,97 @@
 
 ---
 
-## 4.3 ライオン関連
+## 4.3 ラウンド配列
+
+### `duel.rounds`
+- 型: `array`
+- 役割: ラウンドごとの進行状態を配列で持つ。
+
+各要素は次の構造を持つ。
+
+```json
+{
+  "round": 0,
+  "player1_exchange_intent": true,
+  "player1_exchange_card": "",
+  "player1_battle_card": "",
+  "player2_exchange_intent": false,
+  "player2_exchange_card": "",
+  "player2_battle_card": "",
+  "player1_applied_rules": [],
+  "player2_applied_rules": [],
+  "round_winner": null,
+  "lion_scores": {
+    "player1_view": {
+      "player1": 0,
+      "player2": 0
+    },
+    "player2_view": {
+      "player1": 0,
+      "player2": 0
+    }
+  }
+}
+```
+
+### `duel.rounds[].round`
+- 型: `number`
+- 役割: ラウンド番号。
+
+### `duel.rounds[].player1_exchange_intent`
+### `duel.rounds[].player2_exchange_intent`
+- 型: `boolean | null`
+- 役割: 交換意思の有無。
+- 補足: 未確定時は `null`。
+
+### `duel.rounds[].player1_exchange_card`
+### `duel.rounds[].player2_exchange_card`
+- 型: `string`
+- 役割: 交換カード。
+- 補足: 未入力または未公開時は空文字列を取りうる。
+
+### `duel.rounds[].player1_battle_card`
+### `duel.rounds[].player2_battle_card`
+- 型: `string`
+- 役割: 勝負カード。
+- 補足: 未入力または未公開時は空文字列を取りうる。
+
+### `duel.rounds[].player1_applied_rules`
+### `duel.rounds[].player2_applied_rules`
+- 型: `string[]`
+- 役割: そのラウンドで適用されたルール名の一覧。
+
+### `duel.rounds[].round_winner`
+- 型: `"player1" | "player2" | "draw" | null`
+- 役割: そのラウンドの勝者。
+- 補足: 未確定時は `null`。
+
+### `duel.rounds[].lion_scores`
+- 型: `object`
+- 役割: そのラウンド時点のライオン得点表示。
+
+### `duel.rounds[].lion_scores.player1_view`
+### `duel.rounds[].lion_scores.player2_view`
+- 型: `object`
+- 役割: それぞれの視点から見た得点表示。
+
+### `duel.rounds[].lion_scores.player1_view.player1`
+### `duel.rounds[].lion_scores.player1_view.player2`
+### `duel.rounds[].lion_scores.player2_view.player1`
+### `duel.rounds[].lion_scores.player2_view.player2`
+- 型: `number`
+- 役割: ライオン得点値。
+
+---
+
+## 4.4 ライオン関連
 
 ### `duel.lion_score_map`
 - 型: `object`
 - 役割: 各プレイヤーに設定されたライオン配点表。
 
 構造:
+
 ```json
 {
   "player1": {
@@ -235,8 +327,8 @@
 }
 ```
 
-#### `duel.lion_score_map.player1`
-#### `duel.lion_score_map.player2`
+### `duel.lion_score_map.player1`
+### `duel.lion_score_map.player2`
 - 型: `object`
 - 役割: 各プレイヤーに対して設定された配点マップ。
 
@@ -269,112 +361,35 @@
 - それ以外の最大値は `1`
 
 ### `duel.lion_total_scores`
-- 型: `object | null`
-- 役割: プレイヤー視点別の合計得点。
+- 型: `object`
+- 役割: 対戦全体のライオン合計得点表示。
 
 構造:
-```json
-{
-  "player1_view": { "player1": 0, "player2": 4 },
-  "player2_view": { "player1": -3, "player2": 2 }
-}
-```
-
-#### `duel.lion_total_scores.player1_view`
-#### `duel.lion_total_scores.player2_view`
-- 型: `object`
-- 役割: 各視点から見た合計得点。
-
-#### `duel.lion_total_scores.player1_view.player1`
-#### `duel.lion_total_scores.player1_view.player2`
-#### `duel.lion_total_scores.player2_view.player1`
-#### `duel.lion_total_scores.player2_view.player2`
-- 型: `number`
-- 役割: 各視点における player1 / player2 の合計得点。
-
----
-
-## 4.4 ラウンド履歴
-
-### `duel.rounds`
-- 型: `array`
-- 役割: 各ラウンドの詳細履歴を時系列順に保持する。
-
-各要素は次の構造を持つ。
 
 ```json
 {
-  "round": 3,
-  "player1_exchange_intent": false,
-  "player1_exchange_card": "",
-  "player1_battle_card": "",
-  "player2_exchange_intent": false,
-  "player2_exchange_card": "",
-  "player2_battle_card": "",
-  "player1_applied_rules": [],
-  "player2_applied_rules": [],
-  "round_winner": null,
-  "lion_scores": {
-    "player1_view": { "player1": 0, "player2": 0 },
-    "player2_view": { "player1": 0, "player2": 0 }
+  "player1_view": {
+    "player1": 0,
+    "player2": 0
+  },
+  "player2_view": {
+    "player1": 0,
+    "player2": 0
   }
 }
 ```
 
-### `duel.rounds[].round`
-- 型: `number`
-- 役割: ラウンド番号。
-
-### `duel.rounds[].player1_exchange_intent`
-### `duel.rounds[].player2_exchange_intent`
-- 型: `boolean | null`
-- 役割: そのラウンドで交換を行う意思。
-- 値の意味:
-  - `true`: 交換する
-  - `false`: 交換しない
-  - `null`: 未確定
-
-### `duel.rounds[].player1_exchange_card`
-### `duel.rounds[].player2_exchange_card`
-- 型: `string`
-- 役割: 交換対象として選ばれたカード記号。
-- 補足: 未確定または未使用の場合は空文字列 `""` を取る。
-
-### `duel.rounds[].player1_battle_card`
-### `duel.rounds[].player2_battle_card`
-- 型: `string`
-- 役割: そのラウンドで対戦に出したカード記号。
-- 補足: 未確定または未使用の場合は空文字列 `""` を取る。
-
-### `duel.rounds[].player1_applied_rules`
-### `duel.rounds[].player2_applied_rules`
-- 型: `string[]`
-- 役割: そのラウンドで適用されたルール名の一覧。
-
-### `duel.rounds[].round_winner`
-- 型: `"player1" | "player2" | "draw" | null`
-- 役割: そのラウンドの勝者を示す。
-- 値の意味:
-  - `player1`: player1 がそのラウンドで勝利した。
-  - `player2`: player2 がそのラウンドで勝利した。
-  - `draw`: そのラウンドは引き分けだった。
-  - `null`: 未確定、未実施、または判定前のラウンド。
-
-### `duel.rounds[].lion_scores`
+### `duel.lion_total_scores.player1_view`
+### `duel.lion_total_scores.player2_view`
 - 型: `object`
-- 役割: そのラウンドで発生したライオン得点。
+- 役割: それぞれの視点から見た合計得点表示。
 
-#### `duel.rounds[].lion_scores.player1_view`
-#### `duel.rounds[].lion_scores.player2_view`
-- 型: `object`
-- 役割: 各視点で見たそのラウンドの得点。
-
-#### `duel.rounds[].lion_scores.player1_view.player1`
-#### `duel.rounds[].lion_scores.player1_view.player2`
-#### `duel.rounds[].lion_scores.player2_view.player1`
-#### `duel.rounds[].lion_scores.player2_view.player2`
+### `duel.lion_total_scores.player1_view.player1`
+### `duel.lion_total_scores.player1_view.player2`
+### `duel.lion_total_scores.player2_view.player1`
+### `duel.lion_total_scores.player2_view.player2`
 - 型: `number`
-- 役割: そのラウンドの player1 / player2 の得点。
+- 役割: 合計得点値。
 
 ---
 
@@ -382,19 +397,19 @@
 
 ### `answer_condition.advice_for`
 - 型: `"player1" | "player2"`
-- 役割: どちらのプレイヤーに対する助言かを示す。
+- 役割: 今回の問い合わせ対象プレイヤー。
 
 ### `answer_condition.advice_at`
 - 型: `object`
-- 役割: どのラウンドのどのフェーズに対する助言かを示す。
+- 役割: 問い合わせ対象の局面。
 
 ### `answer_condition.advice_at.round`
 - 型: `number`
-- 役割: 対象ラウンド番号。
+- 役割: 問い合わせ対象ラウンド番号。
 
 ### `answer_condition.advice_at.phase`
 - 型: `string`
-- 役割: 対象フェーズ名。
+- 役割: 問い合わせ対象フェーズ。
 - 許可値:
   - `battle`
   - `exchange_intent`
@@ -413,12 +428,12 @@
 
 ### `answer_condition.answer_spec`
 - 型: `object | null`
-- 役割: そのフェーズで要求される回答形式を示す。
-- 補足: `null` の場合は回答要求なし。
+- 役割: 今回の問い合わせに対する回答形式の定義。
+- 補足: `final` では `null` になりうる。
 
 ### `answer_condition.answer_spec.format`
-- 型: `string`
-- 役割: `answer` の期待形式を示す。
+- 型: `string | null`
+- 役割: 回答の型を表す識別子。
 - 許可値:
   - `symbol`
   - `boolean_like`
@@ -442,13 +457,8 @@
 - 注意: 数学的集合ではなく、重複を保持する候補列である。
 
 ### `answer_condition.answer_spec.template`
-- 型: 任意
-- 役割: その request に対して最低限返せるテンプレート値。
-- 例:
-  - `symbol` → `"GGG"`
-  - `boolean_like` → `"yes"`
-  - `lion_score_map` → 配点オブジェクト
-  - `rule_name` → `"lion"`
+- 型: フェーズ依存
+- 役割: サンプル回答値。
 
 ---
 
@@ -460,7 +470,8 @@
 
 ### `analysis.strategy`
 - 型: `string`
-- 役割: 対戦条件や相手に関する補助的な戦略情報。
+- 必須性: 任意
+- 役割: 使用する戦略名。
 - 例: `"clever"`
 
 ### `analysis.strategy_apply_rate`
@@ -523,6 +534,6 @@ Advice API を最小実装する場合、最低限重要なのは次のキーで
 
 ```json
 {
-  "answer": "GGG"
+  "answer": "G"
 }
 ```
