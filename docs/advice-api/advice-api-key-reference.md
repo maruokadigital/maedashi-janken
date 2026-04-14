@@ -493,7 +493,7 @@
 | `lion_score_assign` | `lion_score_map` | ライオン配点表 | `object` | `{ "hornet": 0, ... }` |
 | `exchange_intent` | `boolean_like` | 交換するかどうか | `string` | `"yes"` |
 | `exchange_card_select` | `symbol` | 交換に出すカード | `string` | `"CCC"` |
-| `battle` | `symbol` | 出すカード | `string` | `"GGG"` |
+| `battle` | `symbol` | 出すカード | `string` | `"G"` |
 | `final` | `null` | 通常は未使用 | 任意 | `null` |
 
 ---
