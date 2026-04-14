@@ -4,3 +4,7 @@ node_modules/
 .DS_Store
 dist/
 .next/
+
+.vscode/
+.vscode-userdata
+/open-vscode.cmd
