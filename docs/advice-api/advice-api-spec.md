@@ -80,6 +80,7 @@ request は次のトップレベル構造を持つ。
   "version": "1.0",
   "game_instance_id": "5481c6a7-e1d0-4eab-a1dc-4dd82f82e0bd",
   "game_started_at": 1776126498090,
+  "game_started_at_iso": "2026-04-22T14:36:10.728+09:00",
   "context": {},
   "duel": {},
   "answer_condition": {},
@@ -92,6 +93,7 @@ request は次のトップレベル構造を持つ。
 - `version`
 - `game_instance_id`
 - `game_started_at`
+- `game_started_at_iso`
 - `context`
 - `duel`
 - `answer_condition`
@@ -168,6 +170,7 @@ response は少なくとも `answer` を返す。
   "version": "1.0",
   "game_instance_id": "5481c6a7-e1d0-4eab-a1dc-4dd82f82e0bd",
   "game_started_at": 1776126498090,
+  "game_started_at_iso": "2026-04-22T14:36:10.728+09:00",
   "context": {
     "round_index_base": 0,
     "janken_mapping": [
