@@ -31,6 +31,13 @@
 - ガイド本体  
   → [skin-package-guide.md](skin-package-guide.md)
 
+### パターンJSON
+
+前出しじゃんけんのパターンJSON（手札構成・確率・ナッシュ均衡）の仕様です。
+
+- ガイド本体  
+  → [pattern-json-guide.md](pattern-json-guide.md)
+
 ---
 
 ## 読み方
@@ -50,6 +57,10 @@
 ### スキンを作る場合
 
 1. [skin-package-guide.md](skin-package-guide.md)
+
+### パターンJSONを使う場合
+
+1. [pattern-json-guide.md](pattern-json-guide.md)
 
 ---
 
