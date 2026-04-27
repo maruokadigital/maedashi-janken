@@ -10,9 +10,9 @@
 
 
 - 2枚版
- [public/topologies/2-hands-topologies.json](public/topologies/2-hands-topologies.json)
+ [/public/topologies/2-hands-topologies.json](/public/topologies/2-hands-topologies.json)
 - 6枚版
- [public/topologies/6-hands-topologies.json](public/topologies/6-hands-topologies.json)
+ [/public/topologies/6-hands-topologies.json](/public/topologies/6-hands-topologies.json)
 
 
 
