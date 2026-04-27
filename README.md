@@ -41,6 +41,10 @@
   スキン ZIP の構成、manifest、画像スロット、背景設定の仕様  
   → [docs/skin-package-guide.md](docs/skin-package-guide.md)
 
+- パターン JSON  
+  手札パターンの JSON 定義フォーマットと記述ルール  
+  → [docs/pattern-json-guide.md](docs/pattern-json-guide.md)
+
 ---
 
 ## Getting Started
@@ -62,12 +66,13 @@
 ## Repository Structure
 
 ```
-public-release/
+maedashi-janken/
 ├── docs/
 │   ├── overview.md
 │   ├── README.md
-│   ├── advice-api/
-│   └── skin-package-guide.md
+│   ├── pattern-json-guide.md
+│   ├── skin-package-guide.md
+│   └── advice-api/
 └── public/
     └── images/
         └── public-screenshots/
