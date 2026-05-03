@@ -1,0 +1,275 @@
+{
+  "probability_denominator": 100100,
+  "patterns": [
+    {
+      "hands": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "probability_numerator": 18000
+    },
+    {
+      "hands": [
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "probability_numerator": 18000
+    },
+    {
+      "hands": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          2,
+          1,
+          0
+        ]
+      ],
+      "probability_numerator": 12000
+    },
+    {
+      "hands": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          2,
+          0
+        ]
+      ],
+      "probability_numerator": 9000
+    },
+    {
+      "hands": [
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          1,
+          0,
+          2
+        ]
+      ],
+      "probability_numerator": 9000
+    },
+    {
+      "hands": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "probability_numerator": 8000
+    },
+    {
+      "hands": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "probability_numerator": 5400
+    },
+    {
+      "hands": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          1,
+          0,
+          2
+        ]
+      ],
+      "probability_numerator": 4500
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ],
+      "probability_numerator": 3000
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          1,
+          2,
+          0
+        ]
+      ],
+      "probability_numerator": 3000
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          2,
+          1,
+          0
+        ]
+      ],
+      "probability_numerator": 3000
+    },
+    {
+      "hands": [
+        [
+          0,
+          1,
+          2
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "probability_numerator": 1800
+    },
+    {
+      "hands": [
+        [
+          0,
+          2,
+          1
+        ],
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "probability_numerator": 1800
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          2,
+          1
+        ]
+      ],
+      "probability_numerator": 1200
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          2,
+          0,
+          1
+        ]
+      ],
+      "probability_numerator": 1200
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          3,
+          0
+        ]
+      ],
+      "probability_numerator": 600
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          0,
+          1,
+          2
+        ]
+      ],
+      "probability_numerator": 300
+    },
+    {
+      "hands": [
+        [
+          0,
+          0,
+          3
+        ],
+        [
+          1,
+          0,
+          2
+        ]
+      ],
+      "probability_numerator": 300
+    }
+  ]
+}
