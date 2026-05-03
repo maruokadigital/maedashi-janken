@@ -1,25 +1,24 @@
 # 前出しじゃんけん (Maedashi Janken)
 
-手札が見える対戦ゲーム「前出しじゃんけん」の公開リポジトリです。
+「前出しじゃんけん」の公開仕様リポジトリです。
 
-このリポジトリでは、主に以下を公開しています。
-
-- Advice API（外部AI連携用インターフェース）
-- スキン仕様（画像差し替え・背景設定用）
-- 公開向けドキュメント
-
-現時点では、**公開仕様ドキュメントを中心に整理・公開**しています。  
-ゲーム本体や教材用コードは、今後段階的に整理・公開していきます。
+このリポジトリでは、ゲームルール・API仕様・スキン仕様など、  
+「前出しじゃんけん」に関わる公開仕様をまとめて公開しています。
 
 ---
 
-## Screenshot
+## はじめての方へ
 
-### Game screen
-![Game](public/images/public-screenshots/screenshot-01.png)
+目的に応じて以下のドキュメントからご覧ください。
 
-### Battle / UI example
-![Battle](public/images/public-screenshots/screenshot-02.png)
+- ゲーム概要を知りたい場合  
+  → [docs/overview.md](docs/overview.md)
+
+- ゲームルールを確認したい場合  
+  → [docs/rulebook.md](docs/rulebook.md)
+
+- Advice API を利用したい場合  
+  → [docs/advice-api/advice-api-spec.md](docs/advice-api/advice-api-spec.md)
 
 ---
 
@@ -50,19 +49,18 @@
 
 ---
 
-## Getting Started
+## Screenshots
 
-このリポジトリ単体でゲームを起動することは想定していません。  
-まずは目的に応じて以下から確認してください。
+以下はゲームの流れを示す画面例です。
 
-- 前出しじゃんけんがどんなゲームか知りたい場合  
-  → [docs/overview.md](docs/overview.md)
+### 勝負フェーズの画面例（手札が公開されている状態）
+![勝負フェーズ](public/images/public-screenshots/screenshot-01.png)
 
-- Advice API を使いたい場合  
-  → [docs/advice-api/advice-api-spec.md](docs/advice-api/advice-api-spec.md)
+### 勝利条件を選択する画面
+![ルール選択](public/images/public-screenshots/screenshot-02.png)
 
-- スキンを作りたい場合  
-  → [docs/skin-package-guide.md](docs/skin-package-guide.md)
+### ラウンドの結果表示画面
+![ラウンド結果](public/images/public-screenshots/screenshot-03.png)
 
 ---
 
