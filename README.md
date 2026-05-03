@@ -30,6 +30,9 @@
 - 全体概要  
   → [docs/overview.md](docs/overview.md)
 
+- ゲームルール  
+  → [docs/rulebook.md](docs/rulebook.md)
+
 - ドキュメント一覧  
   → [docs/README.md](docs/README.md)
 
@@ -69,6 +72,7 @@
 maedashi-janken/
 ├── docs/
 │   ├── overview.md
+│   ├── rulebook.md
 │   ├── README.md
 │   ├── pattern-json-guide.md
 │   ├── skin-package-guide.md

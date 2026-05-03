@@ -11,6 +11,11 @@
 - 概要  
   → [overview.md](overview.md)
 
+### ゲームルール
+
+- ルールブック（公式）  
+  → [rulebook.md](rulebook.md)
+
 ### Advice API
 
 外部AIやプログラムからゲームに参加するためのAPI仕様です。
@@ -47,7 +52,8 @@
 ### まず全体像を知りたい場合
 
 1. [overview.md](overview.md)
-2. 必要に応じて [advice-api/README.md](advice-api/README.md) または [skin-package-guide.md](skin-package-guide.md)
+2. [rulebook.md](rulebook.md)
+3. 必要に応じて [advice-api/README.md](advice-api/README.md) または [skin-package-guide.md](skin-package-guide.md)
 
 ### Advice API を使う場合
 
