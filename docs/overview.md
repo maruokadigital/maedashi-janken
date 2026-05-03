@@ -20,6 +20,9 @@
 
 関連ドキュメント：
 
+- ゲームルール  
+  → [rulebook.md](rulebook.md)
+
 - Advice API  
   → [advice-api/README.md](advice-api/README.md)
 

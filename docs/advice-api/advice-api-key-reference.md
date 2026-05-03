@@ -174,7 +174,7 @@
 
 ### `duel.alien_rule_applied`
 - 型: `boolean | null`
-- 役割: Alien ルールが適用されているかを示す。
+- 役割: エイリアン状態（公開）が適用されているかを示す。
 - 値の意味:
   - `true`: 適用あり
   - `false`: 適用なし
@@ -425,7 +425,7 @@
   - `final`
 
 各値の意味:
-- `battle`: 対戦カードを選ぶフェーズ。
+- `battle`: 勝負フェーズ。カードを出すフェーズ。
 - `exchange_intent`: 交換するかどうかを決めるフェーズ。
 - `exchange_card_select`: 交換に出すカードを選ぶフェーズ。
 - `lion_score_assign`: ライオン配点を設定するフェーズ。
