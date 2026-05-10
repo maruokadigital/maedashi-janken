@@ -2,273 +2,75 @@
   "probability_denominator": 100100,
   "patterns": [
     {
-      "hands": [
-        [
-          2,
-          0,
-          1
-        ],
-        [
-          1,
-          1,
-          1
-        ]
-      ],
+      "hands": [[2, 0, 1], [1, 1, 1]],
       "probability_numerator": 18000
     },
     {
-      "hands": [
-        [
-          2,
-          1,
-          0
-        ],
-        [
-          1,
-          1,
-          1
-        ]
-      ],
+      "hands": [[2, 1, 0], [1, 1, 1]],
       "probability_numerator": 18000
     },
     {
-      "hands": [
-        [
-          2,
-          0,
-          1
-        ],
-        [
-          0,
-          2,
-          1
-        ]
-      ],
+      "hands": [[2, 0, 1], [0, 2, 1]],
       "probability_numerator": 12000
     },
     {
-      "hands": [
-        [
-          2,
-          0,
-          1
-        ],
-        [
-          0,
-          1,
-          2
-        ]
-      ],
+      "hands": [[2, 0, 1], [0, 1, 2]],
       "probability_numerator": 9000
     },
     {
-      "hands": [
-        [
-          2,
-          1,
-          0
-        ],
-        [
-          0,
-          2,
-          1
-        ]
-      ],
+      "hands": [[2, 1, 0], [0, 2, 1]],
       "probability_numerator": 9000
     },
     {
-      "hands": [
-        [
-          1,
-          1,
-          1
-        ],
-        [
-          1,
-          1,
-          1
-        ]
-      ],
+      "hands": [[1, 1, 1], [1, 1, 1]],
       "probability_numerator": 8000
     },
     {
-      "hands": [
-        [
-          2,
-          0,
-          1
-        ],
-        [
-          1,
-          0,
-          2
-        ]
-      ],
+      "hands": [[2, 0, 1], [1, 0, 2]],
       "probability_numerator": 5400
     },
     {
-      "hands": [
-        [
-          2,
-          0,
-          1
-        ],
-        [
-          2,
-          1,
-          0
-        ]
-      ],
+      "hands": [[2, 0, 1], [2, 1, 0]],
       "probability_numerator": 4500
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          0,
-          1,
-          2
-        ]
-      ],
+      "hands": [[3, 0, 0], [0, 1, 2]],
       "probability_numerator": 3000
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          0,
-          2,
-          1
-        ]
-      ],
+      "hands": [[3, 0, 0], [0, 2, 1]],
       "probability_numerator": 3000
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          1,
-          1,
-          1
-        ]
-      ],
+      "hands": [[3, 0, 0], [1, 1, 1]],
       "probability_numerator": 3000
     },
     {
-      "hands": [
-        [
-          2,
-          0,
-          1
-        ],
-        [
-          2,
-          0,
-          1
-        ]
-      ],
+      "hands": [[2, 0, 1], [2, 0, 1]],
       "probability_numerator": 1800
     },
     {
-      "hands": [
-        [
-          2,
-          1,
-          0
-        ],
-        [
-          2,
-          1,
-          0
-        ]
-      ],
+      "hands": [[2, 1, 0], [2, 1, 0]],
       "probability_numerator": 1800
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          1,
-          0,
-          2
-        ]
-      ],
+      "hands": [[3, 0, 0], [1, 0, 2]],
       "probability_numerator": 1200
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          1,
-          2,
-          0
-        ]
-      ],
+      "hands": [[3, 0, 0], [1, 2, 0]],
       "probability_numerator": 1200
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          0,
-          0,
-          3
-        ]
-      ],
+      "hands": [[3, 0, 0], [0, 0, 3]],
       "probability_numerator": 600
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          2,
-          0,
-          1
-        ]
-      ],
+      "hands": [[3, 0, 0], [2, 0, 1]],
       "probability_numerator": 300
     },
     {
-      "hands": [
-        [
-          3,
-          0,
-          0
-        ],
-        [
-          2,
-          1,
-          0
-        ]
-      ],
+      "hands": [[3, 0, 0], [2, 1, 0]],
       "probability_numerator": 300
     }
   ]
