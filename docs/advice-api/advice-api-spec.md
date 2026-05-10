@@ -83,6 +83,7 @@ request は次のトップレベル構造を持つ。
   "game_started_at_iso": "2026-04-22T14:36:10.728+09:00",
   "context": {},
   "duel": {},
+  "underived": [],
   "answer_condition": {},
   "analysis": {}
 }
@@ -96,12 +97,29 @@ request は次のトップレベル構造を持つ。
 - `game_started_at_iso`
 - `context`
 - `duel`
+- `underived`
 - `answer_condition`
 - `analysis`
 
 ---
 
-## 4. response の基本構造
+## 4. duel 項目の必須度
+
+`duel` は Advice API、学習用 JSON、リプレイ、検証用途で共通して参照される対戦状態モデルである。  
+そのため、`duel` の各項目だけは次の必須度で分類する。
+
+| 必須度 | 意味 | 通常通信での扱い |
+|------|------|------|
+| Required | `duel` 内の他情報から算出できない根拠情報。`underived` と同義。 | 必ず含める |
+| Recommended | 算出可能だが、実装負荷、検証、互換性、再利用性の観点から通常は含める情報。 | 通常含める。省略は例外扱い |
+| Optional | 主に可読性、学習、デバッグ、解析などの補助用途の情報。 | 通常通信では省略してよい |
+
+`underived` は、`duel` 内で Required に分類されるキー名を JSONPath 風の文字列で列挙する任意のトップレベルメタ情報である。  
+通常通信では省略してよい。学習用 JSON、検証用 JSON、解析用 JSON では付与することを推奨する。
+
+---
+
+## 5. response の基本構造
 
 response は少なくとも `answer` を返す。
 
@@ -161,7 +179,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 5. 実際の request 例
+## 6. 実際の request 例
 
 以下は、実際の公開 request 構造に沿った例である。
 
@@ -199,9 +217,11 @@ response は少なくとも `answer` を返す。
         "player1_exchange_intent": true,
         "player1_exchange_card": "",
         "player1_battle_card": "",
+        "player1_final_hand": [],
         "player2_exchange_intent": false,
         "player2_exchange_card": "",
         "player2_battle_card": "",
+        "player2_final_hand": [],
         "player1_applied_rules": [],
         "player2_applied_rules": [],
         "round_winner": null,
@@ -258,6 +278,21 @@ response は少なくとも `answer` を返す。
       }
     }
   },
+  "underived": [
+    "duel.game_selected_rule",
+    "duel.alien_rule_applied",
+    "duel.player1_rule_selection_status",
+    "duel.player2_rule_selection_status",
+    "duel.player1_initial_hand",
+    "duel.player2_initial_hand",
+    "duel.rounds[].player1_exchange_intent",
+    "duel.rounds[].player2_exchange_intent",
+    "duel.rounds[].player1_exchange_card",
+    "duel.rounds[].player2_exchange_card",
+    "duel.rounds[].player1_battle_card",
+    "duel.rounds[].player2_battle_card",
+    "duel.lion_score_map"
+  ],
   "answer_condition": {
     "answer_spec": {
       "format": "symbol",
@@ -279,7 +314,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 6. context
+## 7. context
 
 ### `context.round_index_base`
 
@@ -303,7 +338,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 7. answer_condition
+## 8. answer_condition
 
 ### `answer_condition.advice_for`
 
@@ -327,7 +362,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 8. answer_spec
+## 9. answer_spec
 
 ### `answer_spec.format`
 
@@ -368,7 +403,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 9. analysis
+## 10. analysis
 
 ### `analysis.strategy`
 
@@ -392,7 +427,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 10. duel.victory_reason
+## 11. duel.victory_reason
 
 許可値:
 
@@ -404,7 +439,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 11. duel.rounds[].round_winner
+## 12. duel.rounds[].round_winner
 
 各ラウンドの勝者を示す。
 
@@ -417,7 +452,19 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 12. rule_selection_status
+## 13. duel.rounds[].player1_final_hand / duel.rounds[].player2_final_hand
+
+各ラウンド終了時点の手札状態を示す。
+
+- 必須度: Recommended
+- 型: `string[]`
+- 意味: そのラウンド終了時点で各プレイヤーが保持している手札
+- 由来: `Record.player1Records[].handAtEnd` / `Record.player2Records[].handAtEnd` に相当する情報
+- 補足: 他の `duel` 情報から導出可能だが、戦略実装、検証、学習用 JSON、リプレイ確認で有用なため、通常は含めることを推奨する
+
+---
+
+## 14. rule_selection_status
 
 許可値:
 
@@ -427,9 +474,23 @@ response は少なくとも `answer` を返す。
 - `no_right`
 - `null`
 
+意味:
+
+- `unknown`: 状態未確定または不明
+- `has_right`: そのプレイヤーに選択権がある
+- `waived`: 勝利条件選択権を放棄済み
+- `no_right`: そのプレイヤーに選択権がない
+- `null`: 情報なし
+
+補足（リモート対戦）:
+
+リモート対戦で主催者がZebraを選択した場合、Zebraはただちに勝利条件として確定せず、勝利条件選択権が挑戦者へ移ります。  
+挑戦者が選択した勝利条件が、その試合の勝利条件になります。  
+挑戦者もZebraを選択した場合は、両者が選択権を放棄したものとして自動選択に進みます。
+
 ---
 
-## 13. ライオン配点制約
+## 15. ライオン配点制約
 
 | ルール | 最小 | 最大 |
 |------|------|------|
@@ -439,7 +500,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 14. 対戦状態判定
+## 16. 対戦状態判定
 
 ### 対戦中
 
@@ -451,7 +512,7 @@ response は少なくとも `answer` を返す。
 
 ---
 
-## 15. 最小レスポンス例
+## 17. 最小レスポンス例
 
 最小限の実装では、1つのフェーズに対して単純な意思決定を返すだけでも動作する。
 

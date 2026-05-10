@@ -59,6 +59,12 @@
 - 必須性: 任意
 - 役割: 対戦状態そのものではない補助情報を持つ。実装によって利用してもよいし、無視してもよい。
 
+### `underived`
+- 型: `string[]`
+- 必須性: 任意
+- 役割: `duel` 内のキーのうち、`duel` 内の他情報から算出できない根拠キー名を JSONPath 風の文字列で列挙する。
+- 補足: 通常通信では省略してよい。学習用 JSON、検証用 JSON、解析用 JSON では、戦略実装が情報不足なのか導出実装不足なのかを判別するために有用である。
+
 ---
 
 ## 2.2 response
@@ -137,15 +143,31 @@
 
 ## 4. `duel` のキー定義
 
+`duel` は Advice API、学習用 JSON、リプレイ、検証用途で共通して参照される対戦状態モデルである。
+そのため、`duel` の各項目だけは次の必須度で分類する。
+
+| 必須度 | 意味 | 通常通信での扱い |
+|---|---|---|
+| `Required` | `duel` 内の他情報から算出できない根拠情報。`underived` と同義。 | 必ず含める |
+| `Recommended` | 算出可能だが、実装負荷、検証、互換性、再利用性の観点から通常は含める情報。 | 通常含める。省略は例外扱い |
+| `Optional` | 主に可読性、学習、デバッグ、解析などの補助用途の情報。 | 通常通信では省略してよい |
+
+`underived` は JSON 本体の構造ではなく、`duel` 内で `Required` に相当するキーを列挙する任意のトップレベルメタ情報である。
+`underived` に含まれない `duel` 項目は、原則として他の `duel` 情報から導出可能な情報として扱う。
+導出が難しい、重い、または外部実装で毎回再計算させると不便な項目は `Recommended` とする。
+単に人間が読みやすいだけの項目は `Optional` とする。
+
 ## 4.1 対戦全体情報
 
 ### `duel.game_selected_rule`
 - 型: `string | null`
+- 必須度: `Required`
 - 役割: 現在の対戦で採用されているゲームルール名。
 - 例: `"lion"`
 
 ### `duel.winner`
 - 型: `"player1" | "player2" | "draw" | null`
+- 必須度: `Recommended`
 - 役割: 勝者を示す。
 - 値の意味:
   - `player1`: player1 が勝者
@@ -155,6 +177,7 @@
 
 ### `duel.victory_reason`
 - 型: `string | null`
+- 必須度: `Recommended`
 - 役割: 勝敗決定理由を示す。
 - 許可値:
   - `complete_point_dominance`
@@ -174,6 +197,7 @@
 
 ### `duel.alien_rule_applied`
 - 型: `boolean | null`
+- 必須度: `Required`
 - 役割: エイリアン状態（公開）が適用されているかを示す。
 - 値の意味:
   - `true`: 適用あり
@@ -183,6 +207,7 @@
 ### `duel.player1_rule_selection_status`
 ### `duel.player2_rule_selection_status`
 - 型: `string | null`
+- 必須度: `Required`
 - 役割: 各プレイヤーのルール選択権の状態を示す。
 - 許可値:
   - `unknown`
@@ -194,9 +219,14 @@
 各値の意味:
 - `unknown`: 状態未確定または不明。
 - `has_right`: そのプレイヤーに選択権がある。
-- `waived`: 選択権を放棄した。
+- `waived`: 勝利条件選択権を放棄済み。
 - `no_right`: そのプレイヤーに選択権がない。
 - `null`: 情報なし。
+
+補足（リモート対戦）:
+- 主催者がZebraを選択した場合、Zebraは即時確定せず、勝利条件選択権は挑戦者へ移る。
+- 挑戦者が選択した勝利条件がその試合の勝利条件になる。
+- 挑戦者もZebraを選択した場合は、両者放棄として自動選択に進む。
 
 ---
 
@@ -205,11 +235,13 @@
 ### `duel.player1_initial_hand`
 ### `duel.player2_initial_hand`
 - 型: `string[]`
+- 必須度: `Required`
 - 役割: 対戦開始時点の初期手札。
 
 ### `duel.player1_last_hand`
 ### `duel.player2_last_hand`
 - 型: `string[]`
+- 必須度: `Recommended`
 - 役割: request 時点でそのプレイヤーが保持している現在手札。
 - 補足: キー名に `last` を含むが、実際の意味としては「その時点で残っている手札」である。
 
@@ -219,6 +251,7 @@
 
 ### `duel.rounds`
 - 型: `array`
+- 必須度: `Required`
 - 役割: ラウンドごとの進行状態を配列で持つ。
 
 各要素は次の構造を持つ。
@@ -229,9 +262,11 @@
   "player1_exchange_intent": true,
   "player1_exchange_card": "",
   "player1_battle_card": "",
+  "player1_final_hand": [],
   "player2_exchange_intent": false,
   "player2_exchange_card": "",
   "player2_battle_card": "",
+  "player2_final_hand": [],
   "player1_applied_rules": [],
   "player2_applied_rules": [],
   "round_winner": null,
@@ -250,38 +285,54 @@
 
 ### `duel.rounds[].round`
 - 型: `number`
+- 必須度: `Optional`
 - 役割: ラウンド番号。
 
 ### `duel.rounds[].player1_exchange_intent`
 ### `duel.rounds[].player2_exchange_intent`
 - 型: `boolean | null`
+- 必須度: `Required`
 - 役割: 交換意思の有無。
 - 補足: 未確定時は `null`。
 
 ### `duel.rounds[].player1_exchange_card`
 ### `duel.rounds[].player2_exchange_card`
 - 型: `string`
+- 必須度: `Required`
 - 役割: 交換カード。
 - 補足: 未入力または未公開時は空文字列を取りうる。
 
 ### `duel.rounds[].player1_battle_card`
 ### `duel.rounds[].player2_battle_card`
 - 型: `string`
+- 必須度: `Required`
 - 役割: 勝負カード。
 - 補足: 未入力または未公開時は空文字列を取りうる。
+
+### `duel.rounds[].player1_final_hand`
+### `duel.rounds[].player2_final_hand`
+- 型: `string[]`
+- 必須度: `Recommended`
+- 役割: そのラウンド終了時点の各プレイヤーの最終手札。
+- 補足: `Record.player1Records[].handAtEnd` / `Record.player2Records[].handAtEnd` に相当する情報から取得できる。
+- 扱い: 他情報から導出可能だが、戦略実装、検証、学習用 JSON、リプレイ確認で有用なため、通常は含めることを推奨する。
+- 注意: 不一致がある場合は、交換意思、交換カード、勝負カード、初期手札などの `Required` 情報を正とする。
 
 ### `duel.rounds[].player1_applied_rules`
 ### `duel.rounds[].player2_applied_rules`
 - 型: `string[]`
+- 必須度: `Recommended`
 - 役割: そのラウンドで適用されたルール名の一覧。
 
 ### `duel.rounds[].round_winner`
 - 型: `"player1" | "player2" | "draw" | null`
+- 必須度: `Recommended`
 - 役割: そのラウンドの勝者。
 - 補足: 未確定時は `null`。
 
 ### `duel.rounds[].lion_scores`
 - 型: `object`
+- 必須度: `Recommended`
 - 役割: そのラウンド時点のライオン得点表示。
 
 ### `duel.rounds[].lion_scores.player1_view`
@@ -302,6 +353,7 @@
 
 ### `duel.lion_score_map`
 - 型: `object`
+- 必須度: `Required`
 - 役割: 各プレイヤーに設定されたライオン配点表。
 
 構造:
@@ -368,6 +420,7 @@
 
 ### `duel.lion_total_scores`
 - 型: `object`
+- 必須度: `Recommended`
 - 役割: 対戦全体のライオン合計得点表示。
 
 構造:
@@ -399,7 +452,44 @@
 
 ---
 
-## 5. `answer_condition` のキー定義
+## 5. `underived` のキー定義
+
+### `underived`
+- 型: `string[]`
+- 必須性: 任意
+- 役割: `duel` 内で `Required` に分類される、非導出の根拠キー名を列挙する。
+- 用途: 学習用 JSON、検証用 JSON、解析用 JSON。通常通信では省略してよい。
+- 表記: JSONPath 風の文字列を使う。配列要素全体に共通する項目は `duel.rounds[].player1_battle_card` のように `[]` で表す。
+
+例:
+
+```json
+[
+  "duel.game_selected_rule",
+  "duel.alien_rule_applied",
+  "duel.player1_rule_selection_status",
+  "duel.player2_rule_selection_status",
+  "duel.player1_initial_hand",
+  "duel.player2_initial_hand",
+  "duel.rounds[].player1_exchange_intent",
+  "duel.rounds[].player2_exchange_intent",
+  "duel.rounds[].player1_exchange_card",
+  "duel.rounds[].player2_exchange_card",
+  "duel.rounds[].player1_battle_card",
+  "duel.rounds[].player2_battle_card",
+  "duel.lion_score_map"
+]
+```
+
+補足:
+
+- `underived` に含まれる項目が不足している場合、その JSON だけでは正しく再構築できない可能性がある。
+- `underived` に含まれない `Recommended` / `Optional` 項目を算出できない場合、それは原則として情報不足ではなく、導出実装側の不足として扱う。
+- 算出が重い・複雑という理由だけでは `underived` にはしない。その場合は `Recommended` として扱う。
+
+---
+
+## 6. `answer_condition` のキー定義
 
 ### `answer_condition.advice_for`
 - 型: `"player1" | "player2"`
@@ -468,7 +558,7 @@
 
 ---
 
-## 6. `analysis` のキー定義
+## 7. `analysis` のキー定義
 
 ### `analysis.opponent_id`
 - 型: `string`
@@ -489,7 +579,7 @@
 
 ---
 
-## 7. `answer` の意味
+## 8. `answer` の意味
 
 `response.answer` の意味は `answer_condition.advice_at.phase` と `answer_condition.answer_spec.format` に依存する。
 
@@ -504,7 +594,7 @@
 
 ---
 
-## 8. `message` と `comment` の意味
+## 9. `message` と `comment` の意味
 
 ### `response.message`
 - 役割: プレイヤーが発言したように表示するためのメッセージ。
@@ -522,7 +612,7 @@
 
 ---
 
-## 9. 最小実装時に最低限理解すべきキー
+## 10. 最小実装時に最低限理解すべきキー
 
 Advice API を最小実装する場合、最低限重要なのは次のキーである。
 
@@ -536,7 +626,7 @@ Advice API を最小実装する場合、最低限重要なのは次のキーで
 
 ---
 
-## 10. 最小レスポンス例
+## 11. 最小レスポンス例
 
 ```json
 {

@@ -2,7 +2,18 @@
   "probability_denominator": 8190,
   "patterns": [
     {
-      "hands": [[0, 1, 1], [1, 0, 1]],
+      "hands": [
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ],
       "probability_numerator": 3000,
       "nash_outcome": {
         "no_exchange": "mixed",
@@ -11,7 +22,18 @@
       "exchange_effect": "none"
     },
     {
-      "hands": [[0, 0, 2], [1, 1, 0]],
+      "hands": [
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ],
       "probability_numerator": 1500,
       "nash_outcome": {
         "no_exchange": "win_fixed",
@@ -20,16 +42,38 @@
       "exchange_effect": "change"
     },
     {
-      "hands": [[0, 1, 1], [0, 1, 1]],
-      "probability_numerator": 1200,
+      "hands": [
+        [
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
+      "probability_numerator": 1500,
       "nash_outcome": {
-        "no_exchange": "draw_fixed",
-        "with_exchange": "draw_fixed"
+        "no_exchange": "win_fixed",
+        "with_exchange": "mixed"
       },
-      "exchange_effect": "none"
+      "exchange_effect": "change"
     },
     {
-      "hands": [[0, 0, 2], [0, 1, 1]],
+      "hands": [
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          0,
+          1
+        ]
+      ],
       "probability_numerator": 900,
       "nash_outcome": {
         "no_exchange": "win_fixed",
@@ -38,7 +82,18 @@
       "exchange_effect": "none"
     },
     {
-      "hands": [[0, 0, 2], [1, 0, 1]],
+      "hands": [
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ],
       "probability_numerator": 900,
       "nash_outcome": {
         "no_exchange": "draw_fixed",
@@ -47,7 +102,18 @@
       "exchange_effect": "none"
     },
     {
-      "hands": [[0, 0, 2], [0, 2, 0]],
+      "hands": [
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          2
+        ]
+      ],
       "probability_numerator": 600,
       "nash_outcome": {
         "no_exchange": "win_fixed",
@@ -56,7 +122,18 @@
       "exchange_effect": "change"
     },
     {
-      "hands": [[0, 0, 2], [0, 0, 2]],
+      "hands": [
+        [
+          2,
+          0,
+          0
+        ],
+        [
+          2,
+          0,
+          0
+        ]
+      ],
       "probability_numerator": 90,
       "nash_outcome": {
         "no_exchange": "draw_fixed",
